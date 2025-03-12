@@ -32,3 +32,14 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 library(dplyer)
 
 read_csv('Users/ysh/Documents/Github/analysis新/data/life-under-lockdown-wave2-extract (1).csv') 
+
+misinfo_d <- read_csv(
+  '/Users/ysh/Documents/Github/analysis新/data/life -under-lockdown-wave2-extract.csv',
+  show_col_types = FALSE)
+  
+  knowledge_levels <- c(
+  'Nothing at all',
+  'Not very much',
+  'A fair amount',
+  'A great deal'
+)
