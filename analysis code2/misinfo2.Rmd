@@ -31,7 +31,6 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 library(dplyer)
 
-read_csv('Users/ysh/Documents/Github/analysis新/data/life-under-lockdown-wave2-extract (1).csv') 
 
 misinfo_d <- read_csv(
   '/Users/ysh/Documents/Github/analysis新/data/life -under-lockdown-wave2-extract.csv',
@@ -43,3 +42,74 @@ misinfo_d <- read_csv(
   'A fair amount',
   'A great deal'
 )
+
+misinfo_d <- misinfo_d %>%
++     mutate(
++         know_facebook = know_facebook %>%
++             ordered(
++                 levels = knowledge_levels
++             )
++     )
+# Visualisation of dataset
+> misinfo_d %>%
++     ggplot(
++         aes(x = age)
++     ) +
++     geom_histogram(binwidth = 5)
+> misinfo_d %>%
++     ggplot(
++         aes(x = gender)
++     ) +
++     geom_bar()
+> misinfo_d %>%
++     ggplot(
++         aes(x = know_facebook)
++     ) +
++     geom_bar()
+> misinfo_d %>%
++     group_by(gender) %>%
++     summarise(
++         n = n(),
++         M = mean(beliefs),
++         Mdn = median(beliefs),
++         SD = sd(beliefs)
++     )
+
+#Hypotheses
+H1 We expect a relationship between gender and number of misinformation beliefs
+H2 We expect a relationship between age and number of misinformation beliefs
+H3 We expect a relationship between
+#finding
+## Number of misinformation beliefs versus gender
+## Number of misinformation beliefs versus age
+## Number of misinformation beliefs versus reliance on Facebook for knowledge 
+misinfo_d %>%
+ggplot(
+aes(x = age, y = beliefs)
+) +
+geom_jitter() 
+
+misinfo_d %>%
+cor.test(
+~ age + beliefs,
+data = .,
+method = 'pearson'
+)
+
+misinfo_d %>% 
+ggplot(
+aes(x = know_facebook, y = beliefs)
+) + 
+geom_boxplot()
+
+misinfo_d %>%
+mutate(
+know_facebook = as.numeric(know_facebook)
+) %>%
+cor.test(
+~ know_facebook + beliefs,
+data = .,
+method = 'spearman',
+exact = FALSE
+)
+In the sample, there is a statistically significant moderate positive relationships
